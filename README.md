@@ -13,7 +13,7 @@ Below is a representation of music that appeared on the Billboard Hot 100 over t
 
 *(Click the image to zoom in and view in high resolution)*
 
-<a href="charts/Billboard_Infographic.png">
+<a href="charts/Billboard_Infographic_Web.png">
   <img src="charts/Billboard_Infographic_Web.png" width="100%" alt="Billboard Hot 100 Evolution Infographic">
 </a>
 
