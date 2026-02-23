@@ -6,7 +6,7 @@ Tracking the evolution of mainstream music (1960-2025). This project scrapes Bil
 Below is a representation of music that appeared on the Billboard Hot 100 over the last 7 decades. The Infographic shows:
 
 * **Top Artist:** The act maintaining the highest cumulative weeks on the chart per year.
-* * **Chart Churn:** The volume of unique hits versus individual artists entering the charts.
+* **Chart Churn:** The volume of unique hits versus individual artists entering the charts.
 * **Chart Velocity:** A density map of how high songs peak versus their total lifespan on the Billboard.
 * **Genres Wave:** Market share evolution of the era's top 3 genres.
 * **Genre Longevity:** The distribution of songs lifespans for the most popular genres per decade.
@@ -14,7 +14,7 @@ Below is a representation of music that appeared on the Billboard Hot 100 over t
 *(Click the image to zoom in and view in high resolution)*
 
 <a href="charts/Billboard_Infographic.png">
-  <img src="charts/Billboard_Infographic.png" width="100%" alt="Billboard Hot 100 Evolution Infographic">
+  <img src="charts/Billboard_Infographic_Web.png" width="100%" alt="Billboard Hot 100 Evolution Infographic">
 </a>
 
 ---
