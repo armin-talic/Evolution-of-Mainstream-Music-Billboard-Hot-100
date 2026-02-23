@@ -8,13 +8,13 @@ Tracking the evolution of mainstream music (1960-2025). This project scrapes Bil
 
 ## Billboard Hot 100 Timeline Infographic
 
-Below is a representation of music that appeared on the Billboard Hot 100 over the last 7 decades. The Infographic shows:
+Below is a visual representation of music trends including artists, songs, and genres that appeared on the Billboard Hot 100 over the last 7 decades. The Infographic shows:
 
-* **Top Artist:** The act maintaining the highest cumulative weeks on the chart per year.
+* **Top Artist:** The act maintaining the highest cumulative weeks on the Billboard Hot 100 chart per year.
 * **Chart Churn:** The volume of unique hits versus individual artists entering the charts.
 * **Chart Velocity:** A density map of how high songs peak versus their total lifespan on the Billboard.
 * **Genres Wave:** Market share evolution of the era's top 3 genres.
-* **Genre Longevity:** The distribution of songs lifespans for the most popular genres per decade.
+* **Genre Longevity:** The distribution of songs lifespans for the most popular 5 genres per decade.
 
 *(Click the image to zoom in and view in high resolution)*
 
