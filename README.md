@@ -1,7 +1,12 @@
 # Evolution-of-Mainstream-Music-Billboard-Hot-100
 Tracking the evolution of mainstream music (1960-2025). This project scrapes Billboard Hot 100 history and enriches it via MusicBrainz and TheAudioDB APIs. It features high-fidelity, decade-by-decade visual dashboards analyzing genre waves, artist dominance, and chart volatility to map pop culture shifts over time.
 
-## 📊 The Grand Timeline Infographic
+## Table of Contents
+* [Billboard Hot 100 Timeline Infographic](#billboard-hot-100-timeline-infographic)
+* [⚙️ Data Collection & Sources](#️-data-collection--sources)
+* [Future Charts & Analysis](#future-charts--analysis) ---
+
+## Billboard Hot 100 Timeline Infographic
 
 Below is a representation of music that appeared on the Billboard Hot 100 over the last 7 decades. The Infographic shows:
 
@@ -39,8 +44,4 @@ The dataset is constructed from three distinct sources:
 
 3. **TheAudioDB API (Supplemental Enrichment)**
    * **Source:** [TheAudioDB API](https://www.theaudiodb.com/api_guide.php)
-   * **Description:** Used as a secondary data enrichment layer to fill in genre gaps and provide additional qualitative attributes (like sonic "Mood"). In the final merging phase, this data acts as a fallback for missing MusicBrainz metadata, resulting in an clean and complete genre map for the visualizations.
-
-<a href="charts/Billboard_Infographic_Web.png">
-  <img src="charts/Billboard_Infographic_Web.png" width="100%" alt="Billboard Hot 100 Evolution Infographic">
-</a>
+   * **Description:** Used as a secondary data enrichment layer to fill in genre gaps and provide additional qualitative attributes (like sonic "Mood"). In the final merging phase, this data acts as a fallback for missing MusicBrainz metadata, resulting in a clean and complete genre map for the visualizations.
