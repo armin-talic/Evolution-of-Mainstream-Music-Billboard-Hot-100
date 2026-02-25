@@ -10,7 +10,7 @@ Tracking the evolution of mainstream music (1960-2025). This project scrapes Bil
 
 ## 💿 The Vinyl Dashboard: Longest-Running Hits
 
-A vinyl-styled visualization showing the artists with the longest "longevity" on Billboard Top 100; longevity is defined by total amount of weeks accumulated while the track is on the list.
+A vinyl-styled visualization showing the artists with the highest "longevity" on Billboard Top 100; longevity is defined by total amount of weeks accumulated while the track is on the list.
 Time is mapped around the vinyl's circumference, while the vinyl grooves serve as a scale for longevity; the further a bar extends outward, the longer that song stayed on the Hot 100.
 
 *(Click the image to zoom in and view in high resolution)*
