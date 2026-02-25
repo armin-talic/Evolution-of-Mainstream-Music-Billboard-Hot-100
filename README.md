@@ -1,5 +1,7 @@
 # Evolution-of-Mainstream-Music-Billboard-Hot-100
-Tracking the evolution of mainstream music (1960-2025). This project scrapes Billboard Hot 100 history and enriches it via MusicBrainz and TheAudioDB APIs. It features high-fidelity, decade-by-decade visual dashboards analyzing genre waves, artist dominance, and chart volatility to map pop culture shifts over time.
+Tracking the evolution of mainstream music through data visualization (1960-2025).
+The data is collected by scraping Billboard Hot 100 history and enriched with MusicBrainz and TheAudioDB APIs. 
+
 
 ## Table of Contents
 * [💿 The Vinyl Dashboard: Longest-Running Hits](#-the-vinyl-dashboard-longest-running-hits)
@@ -13,50 +15,51 @@ Tracking the evolution of mainstream music (1960-2025). This project scrapes Bil
 A vinyl-styled visualization showing the artists with the highest "longevity" on Billboard Top 100; longevity is defined by total amount of weeks accumulated while the track is on the list.
 Time is mapped around the vinyl's circumference, while the vinyl grooves serve as a scale for longevity; the further a bar extends outward, the longer that song stayed on the Hot 100.
 
-*(Click the image to zoom in and view in high resolution)*
-
-<a href="charts/Record_Chart.png">
+<p align="center">
   <img src="charts/Record_Chart.png" width="100%" alt="Billboard Vinyl Dashboard">
-</a>
+</p>
 
 ---
 
 ## 📊 Billboard Hot 100 Timeline Infographic
 
-Below is a visual representation of music trends including artists, songs, and genres that appeared on the Billboard Hot 100 over the last 7 decades. The Infographic shows:
+The following visualizations break down 65 years of musical data into specific eras. Each dashboard analyzes the following metrics:
 
 * **Top Artist:** The act maintaining the highest cumulative weeks on the Billboard Hot 100 chart per year.
-* **Chart Churn:** The volume of unique hits versus individual artists entering the charts.
-* **Chart Velocity:** A density map of how high songs peak versus their total lifespan on the Billboard.
-* **Genres Wave:** Market share evolution of the era's top 3 genres.
-* **Genre Longevity:** The distribution of songs lifespans for the most popular 5 genres per decade.
+* **Top Songs:** The longest-running #1 hit for every single year in the dataset. 
+* **Chart Velocity:** A density map showing the relationship between a song's Peak Rank (1-100) and its total weeks on chart. Hotter areas (Violet) indicate where most songs cluster.
+* **Genres Wave:** A streamgraph showing the "Volume" or market share of the top 4 genres over time. Thickness indicates higher popularity in the mainstream.
+* **Genre Longevity:** A ridgeplot showing the distribution of "staying power." It tracks how many weeks songs in a specific genre stay on the chart, identifying which genres produce "long-tail" hits versus "flash-in-the-pan" successes.
+* **Tempo Analysis:** A dynamic metronome showing the Average BPM (Beats Per Minute) for the era, including the typical range (5th to 95th percentile).
 
-*(Click the image to zoom in and view in high resolution)*
+### 🏆 All-Time Master Dashboard (1960-2025)
+<p align="center">
+  <img src="charts/Dashboard_All_Time.png" width="100%" alt="Billboard Master Dashboard">
+</p>
 
-<a href="charts/Billboard_Infographic_Web.png">
-  <img src="charts/Billboard_Infographic_Web.png" width="100%" alt="Billboard Hot 100 Evolution Infographic">
-</a>
+### 📅 Explore by Decade
+*Click a decade below to expand the high-resolution dashboard without leaving the page.*
+
+| 1960s | 1970s | 1980s | 1990s |
+| :---: | :---: | :---: | :---: |
+| <details><summary>🔍 View 60s</summary><br><img src="charts/Dashboard_1960s.png" width="100%"></details> | <details><summary>🔍 View 70s</summary><br><img src="charts/Dashboard_1970s.png" width="100%"></details> | <details><summary>🔍 View 80s</summary><br><img src="charts/Dashboard_1980s.png" width="100%"></details> | <details><summary>🔍 View 90s</summary><br><img src="charts/Dashboard_1990s.png" width="100%"></details> |
+
+| 2000s | 2010s | 2020s |
+| :---: | :---: | :---: |
+| <details><summary>🔍 View 00s</summary><br><img src="charts/Dashboard_2000s.png" width="100%"></details> | <details><summary>🔍 View 10s</summary><br><img src="charts/Dashboard_2010s.png" width="100%"></details> | <details><summary>🔍 View 20s</summary><br><img src="charts/Dashboard_2020s.png" width="100%"></details> |
 
 ---
 
 ## ⚙️ Data Collection & Sources
 
-This project uses a multi-source data pipeline, integrating core historical chart data with dual API metadata enrichment to provide a multi-dimensional view of music history. 
-
-The dataset is constructed from three distinct sources:
+This project uses a multi-source data pipeline, integrating core historical chart data with dual API metadata enrichment. 
 
 1. **Billboard Hot 100 History (Base Data)**
-   * **Source:** [utdata/rwd-billboard-data GitHub Repository](https://github.com/utdata/rwd-billboard-data)
-   * **Description:** Serves as the foundational timeline of the project, containing the weekly chart performance for every song that entered the Hot 100 from 1960 to the present day. Includes track titles, performers, peak positions, and weeks on the chart.
+   * **Source:** [utdata/rwd-billboard-data](https://github.com/utdata/rwd-billboard-data)
+   * Contains weekly performance from 1960 to present.
 
-2. **MusicBrainz API (Core Metadata & Band Relations)**
-   * **Source:** [MusicBrainz API](https://musicbrainz.org/doc/MusicBrainz_API)
-   * **Description:** A robust R-based 2-step extraction script queries this API for every unique performer found in the Billboard base data. It fetches deeply granular information including:
-     * Demographic markers (gender, country, career start/end dates).
-     * The top community-voted genre and style tags.
-     * A secondary "relations" lookup to extract specific band members, allowing the dataset to differentiate between solo acts, duos, and groups.
-   * *Note: To respect the API's strict rate limits, the data extraction script features built-in cache-and-resume logic to save progress locally across multiple sessions.*
+2. **MusicBrainz API (Core Metadata)**
+   * Fetches demographics, band relations (solo vs group), and community-voted genre tags.
 
 3. **TheAudioDB API (Supplemental Enrichment)**
-   * **Source:** [TheAudioDB API](https://www.theaudiodb.com/api_guide.php)
-   * **Description:** Used as a secondary data enrichment layer to fill in genre gaps and provide additional qualitative attributes (like sonic "Mood"). In the final merging phase, this data acts as a fallback for missing MusicBrainz metadata, resulting in a clean and complete genre map for the visualizations.
+   * Fallback for missing genre metadata and qualitative "Mood" attributes.
