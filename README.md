@@ -2,11 +2,26 @@
 Tracking the evolution of mainstream music (1960-2025). This project scrapes Billboard Hot 100 history and enriches it via MusicBrainz and TheAudioDB APIs. It features high-fidelity, decade-by-decade visual dashboards analyzing genre waves, artist dominance, and chart volatility to map pop culture shifts over time.
 
 ## Table of Contents
-* [📊 Billboard Hot 100 Timeline Infographic](#billboard-hot-100-timeline-infographic)
+* [💿 The Vinyl Dashboard: Longest-Running Hits](#-the-vinyl-dashboard-longest-running-hits)
+* [📊 Billboard Hot 100 Timeline Infographic](#-billboard-hot-100-timeline-infographic)
 * [⚙️ Data Collection & Sources](#️-data-collection--sources)
-  
 
-## Billboard Hot 100 Timeline Infographic
+---
+
+## 💿 The Vinyl Dashboard: Longest-Running Hits
+
+A vinyl-styled visualization showing the artists with the longest "longevity" on Billboard Top 100; longevity is defined by total amount of weeks accumulated while the track is on the list.
+Time is mapped around the vinyl's circumference, while the vinyl grooves serve as a scale for longevity; the further a bar extends outward, the longer that song stayed on the Hot 100.
+
+*(Click the image to zoom in and view in high resolution)*
+
+<a href="charts/Record_Chart.png">
+  <img src="charts/Record_Chart.png" width="100%" alt="Billboard Vinyl Dashboard">
+</a>
+
+---
+
+## 📊 Billboard Hot 100 Timeline Infographic
 
 Below is a visual representation of music trends including artists, songs, and genres that appeared on the Billboard Hot 100 over the last 7 decades. The Infographic shows:
 
