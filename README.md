@@ -4,13 +4,13 @@ The data is collected by scraping Billboard Hot 100 history and enriched with Mu
 
 
 ## Table of Contents
-* [💿 The Vinyl Dashboard: Longest-Running Hits](#-the-vinyl-dashboard-longest-running-hits)
-* [📊 Billboard Hot 100 Timeline Infographic](#-billboard-hot-100-timeline-infographic)
-* [⚙️ Data Collection & Sources](#️-data-collection--sources)
+* [The Vinyl Dashboard: Longest-Running Hits](#-the-vinyl-dashboard-longest-running-hits)
+* [Billboard Hot 100 Timeline Infographic](#-billboard-hot-100-timeline-infographic)
+* [Data Collection & Sources](#️-data-collection--sources)
 
 ---
 
-## 💿 The Vinyl Dashboard: Longest-Running Hits
+## The Vinyl Dashboard: Longest-Running Hits
 
 A vinyl-styled visualization showing the artists with the highest "longevity" on Billboard Top 100; longevity is defined by total amount of weeks accumulated while the track is on the list.
 Time is mapped around the vinyl's circumference, while the vinyl grooves serve as a scale for longevity; the further a bar extends outward, the longer that song stayed on the Hot 100.
