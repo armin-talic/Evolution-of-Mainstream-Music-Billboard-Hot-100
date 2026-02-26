@@ -23,7 +23,7 @@ Time is mapped around the vinyl's circumference, while the vinyl grooves serve a
 
 ## 📊 Billboard Hot 100 Timeline Infographic
 
-The following visualizations break down 65 years of musical data into specific eras. Each dashboard analyzes the following metrics:
+The following visualizations break down 65 years of musical data into specific eras. Each dashboard shows the following metrics:
 
 * **Top Artist:** The act maintaining the highest cumulative weeks on the Billboard Hot 100 chart per year.
 * **Top Songs:** The longest-running #1 hit for every single year in the dataset. 
@@ -32,9 +32,9 @@ The following visualizations break down 65 years of musical data into specific e
 * **Genre Longevity:** A ridgeplot showing the distribution of "staying power." It tracks how many weeks songs in a specific genre stay on the chart, identifying which genres produce "long-tail" hits versus "flash-in-the-pan" successes.
 * **Tempo Analysis:** A dynamic metronome showing the Average BPM (Beats Per Minute) for the era, including the typical range (5th to 95th percentile).
 
-### 🏆 All-Time Master Dashboard (1960-2025)
+### 1990s 
 <p align="center">
-  <img src="charts/Dashboard_All_Time.png" width="100%" alt="Billboard Master Dashboard">
+  <img src="charts/Dashboard_1990s.png" width="100%" alt="Billboard 1990s Dashboard">
 </p>
 
 ### 📅 Explore by Decade
@@ -61,6 +61,11 @@ The following visualizations break down 65 years of musical data into specific e
 </details>
 
 <details>
+  <summary>🔍 <strong>View 1990s</strong></summary><br>
+  <img src="charts/Dashboard_1990s.png" width="100%">
+</details>
+
+<details>
   <summary>🔍 <strong>View 2000s</strong></summary><br>
   <img src="charts/Dashboard_2000s.png" width="100%">
 </details>
@@ -73,6 +78,11 @@ The following visualizations break down 65 years of musical data into specific e
 <details>
   <summary>🔍 <strong>View 2020s</strong></summary><br>
   <img src="charts/Dashboard_2020s.png" width="100%">
+</details>
+
+<details>
+  <summary>🔍 <strong>View All Time</strong></summary><br>
+  <img src="charts/Dashboard_All_Time.png" width="100%">
 </details>
 
 ---
