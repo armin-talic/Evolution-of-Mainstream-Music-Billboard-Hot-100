@@ -26,14 +26,6 @@ Time is mapped around the vinyl's circumference, while the vinyl grooves serve a
 
 ### 📈 The Rise of One-week Wonders
 
-This analysis explores the **"Two-Speed Chart"** phenomenon. By tracking every song that survived exactly one week on the Hot 100, we can visualize a massive shift in music consumption. 
-
-The data reveals a stark contrast: 
-* **The 1980s Stability:** A period of "shared hits" with virtually zero "One-Week Wonders." 
-* **The Modern Polarization:** A "Bimodal" distribution where music is split between instant "flash-in-the-pan" hits (driven by album streaming dumps) and record-breaking marathon tracks (driven by algorithmic longevity).
-
-
-
 <p align="center">
   <img src="charts/One_Week_Wonders.png" width="100%" alt="Billboard One-Week Wonders Analysis">
 </p>
