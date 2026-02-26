@@ -1,18 +1,21 @@
 # Evolution-of-Mainstream-Music-Billboard-Hot-100
-Tracking the evolution of mainstream music through data visualization (1960-2025).
+Tracking the evolution of mainstream music through data visualization (1960-2025). 
 The data is collected by scraping Billboard Hot 100 history and enriched with MusicBrainz and TheAudioDB APIs. 
 
-
 ## Table of Contents
-* [The Vinyl Dashboard: Longest-Running Hits](#-the-vinyl-dashboard-longest-running-hits)
-* [Billboard Hot 100 Timeline Infographic](#-billboard-hot-100-timeline-infographic)
+* [Data Visualization](#-data-visualization)
+    * [The Vinyl Dashboard: Longest-Running Hits](#-the-vinyl-dashboard-longest-running-hits)
+    * [The Rise of One-week Wonders](#-the-rise-of-one-week-wonders)
+    * [Billboard Hot 100 Timeline Infographic](#-billboard-hot-100-timeline-infographic)
 * [Data Collection & Sources](#️-data-collection--sources)
 
 ---
 
-## The Vinyl Dashboard: Longest-Running Hits
+## 🎨 Data Visualization
 
-A vinyl-styled visualization showing the artists with the highest "longevity" on Billboard Top 100; longevity is defined by total amount of weeks accumulated while the track is on the list.
+### 💿 The Vinyl Dashboard: Longest-Running Hits
+
+A vinyl-styled visualization showing the artists with the highest "longevity" on Billboard Top 100; longevity is defined by total amount of weeks accumulated while the track is on the list. 
 Time is mapped around the vinyl's circumference, while the vinyl grooves serve as a scale for longevity; the further a bar extends outward, the longer that song stayed on the Hot 100.
 
 <p align="center">
@@ -21,24 +24,35 @@ Time is mapped around the vinyl's circumference, while the vinyl grooves serve a
 
 ---
 
-## 📊 Billboard Hot 100 Timeline Infographic
+### 📈 The Rise of One-week Wonders
+
+This analysis explores the **"Two-Speed Chart"** phenomenon. By tracking every song that survived exactly one week on the Hot 100, we can visualize a massive shift in music consumption. 
+
+The data reveals a stark contrast: 
+* **The 1980s Stability:** A period of "shared hits" with virtually zero "One-Week Wonders." 
+* **The Modern Polarization:** A "Bimodal" distribution where music is split between instant "flash-in-the-pan" hits (driven by album streaming dumps) and record-breaking marathon tracks (driven by algorithmic longevity).
+
+
+
+<p align="center">
+  <img src="charts/One_Week_Wonders.png" width="100%" alt="Billboard One-Week Wonders Analysis">
+</p>
+
+---
+
+### 📊 Billboard Hot 100 Timeline Infographic
 
 The following visualizations break down 65 years of musical data into specific eras. Each dashboard shows the following metrics:
 
 * **Top Artist:** The act maintaining the highest cumulative weeks on the Billboard Hot 100 chart per year.
 * **Top Songs:** The longest-running #1 hit for every single year in the dataset. 
-* **Chart Velocity:** A density map showing the relationship between a song's Peak Rank (1-100) and its total weeks on chart. Hotter areas (Violet) indicate where most songs cluster.
-* **Genres Wave:** A streamgraph showing the "Volume" or market share of the top 4 genres over time. Thickness indicates higher popularity in the mainstream.
-* **Genre Longevity:** A ridgeplot showing the distribution of "staying power." It tracks how many weeks songs in a specific genre stay on the chart, identifying which genres produce "long-tail" hits versus "flash-in-the-pan" successes.
-* **Tempo Analysis:** A dynamic metronome showing the Average BPM (Beats Per Minute) for the era, including the typical range (5th to 95th percentile).
-
-### 1990s 
-<p align="center">
-  <img src="charts/Dashboard_1990s.png" width="100%" alt="Billboard 1990s Dashboard">
-</p>
+* **Chart Velocity:** A density map showing the relationship between a song's Peak Rank (1-100) and its total weeks on chart. 
+* **Genres Wave:** A streamgraph showing the "Volume" or market share of the top genres over time. Thickness indicates higher popularity in the mainstream.
+* **Genre Longevity:** A ridgeplot showing the distribution of "staying power" per genre.
+* **Tempo Analysis:** A dynamic metronome showing the Average BPM (Beats Per Minute) for the era.
 
 ### 📅 Explore by Decade
-*Click a decade below to expand the high-resolution dashboard without leaving the page.*
+*Click a decade below to expand the high-resolution dashboard.*
 
 <details>
   <summary>🔍 <strong>View 1960s</strong></summary><br>
@@ -53,11 +67,6 @@ The following visualizations break down 65 years of musical data into specific e
 <details>
   <summary>🔍 <strong>View 1980s</strong></summary><br>
   <img src="charts/Dashboard_1980s.png" width="100%">
-</details>
-
-<details>
-  <summary>🔍 <strong>View 1990s</strong></summary><br>
-  <img src="charts/Dashboard_1990s.png" width="100%">
 </details>
 
 <details>
@@ -97,7 +106,7 @@ This project uses a multi-source data pipeline, integrating core historical char
 
 2. **Billboard Emerging Artists History**
    * **Source:** Custom Python web scraper using the `billboard.py` library.
-   * Contains the complete weekly history of the Billboard Emerging Artists chart from its inception in August 2017 to present.
+   * Contains the complete weekly history of the Billboard Emerging Artists chart.
 
 3. **MusicBrainz API (Core Metadata)**
    * Fetches demographics, band relations (solo vs group), and community-voted genre tags.
