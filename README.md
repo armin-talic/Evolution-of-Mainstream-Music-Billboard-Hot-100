@@ -27,7 +27,7 @@ Time is mapped around the vinyl's circumference, while the vinyl grooves serve a
 ### The Rise of One-week Wonders
 
 <p align="center">
-  <img src="charts/One_Week_Wonders.png" width="100%" alt="Billboard One-Week Wonders Analysis">
+  <img src="charts/One_Week_Wonders.png?v=2" width="100%" alt="Billboard One-Week Wonders Analysis">
 </p>
 
 ---
