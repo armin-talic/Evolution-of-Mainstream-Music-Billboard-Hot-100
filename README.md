@@ -11,7 +11,7 @@ The data is collected by scraping Billboard Hot 100 history and enriched with Mu
 
 ---
 
-## 🎨 Data Visualization
+## Data Visualization
 
 ### 💿 The Vinyl Dashboard: Longest-Running Hits
 
@@ -24,7 +24,7 @@ Time is mapped around the vinyl's circumference, while the vinyl grooves serve a
 
 ---
 
-### 📈 The Rise of One-week Wonders
+### The Rise of One-week Wonders
 
 <p align="center">
   <img src="charts/One_Week_Wonders.png" width="100%" alt="Billboard One-Week Wonders Analysis">
@@ -32,7 +32,7 @@ Time is mapped around the vinyl's circumference, while the vinyl grooves serve a
 
 ---
 
-### 📊 Billboard Hot 100 Timeline Infographic
+### Billboard Hot 100 Timeline Infographic
 
 The following visualizations break down 65 years of musical data into specific eras. Each dashboard shows the following metrics:
 
@@ -43,7 +43,15 @@ The following visualizations break down 65 years of musical data into specific e
 * **Genre Longevity:** A ridgeplot showing the distribution of "staying power" per genre.
 * **Tempo Analysis:** A dynamic metronome showing the Average BPM (Beats Per Minute) for the era.
 
-### 📅 Explore by Decade
+### 1990s 
+
+<p align="center">
+
+  <img src="charts/Dashboard_1990s.png" width="100%" alt="Billboard 1990s Dashboard">
+
+</p>
+
+### Explore by Decade
 *Click a decade below to expand the high-resolution dashboard.*
 
 <details>
@@ -88,7 +96,7 @@ The following visualizations break down 65 years of musical data into specific e
 
 ---
 
-## ⚙️ Data Collection & Sources
+## Data Collection & Sources
 
 This project uses a multi-source data pipeline, integrating core historical chart data with dual API metadata enrichment. 
 
