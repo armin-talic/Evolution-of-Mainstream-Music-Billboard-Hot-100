@@ -40,13 +40,40 @@ The following visualizations break down 65 years of musical data into specific e
 ### 📅 Explore by Decade
 *Click a decade below to expand the high-resolution dashboard without leaving the page.*
 
-| 1960s | 1970s | 1980s | 1990s |
-| :---: | :---: | :---: | :---: |
-| <details><summary>🔍 View 60s</summary><br><img src="charts/Dashboard_1960s.png" width="100%"></details> | <details><summary>🔍 View 70s</summary><br><img src="charts/Dashboard_1970s.png" width="100%"></details> | <details><summary>🔍 View 80s</summary><br><img src="charts/Dashboard_1980s.png" width="100%"></details> | <details><summary>🔍 View 90s</summary><br><img src="charts/Dashboard_1990s.png" width="100%"></details> |
+<details>
+  <summary>🔍 <strong>View 1960s</strong></summary><br>
+  <img src="charts/Dashboard_1960s.png" width="100%">
+</details>
 
-| 2000s | 2010s | 2020s |
-| :---: | :---: | :---: |
-| <details><summary>🔍 View 00s</summary><br><img src="charts/Dashboard_2000s.png" width="100%"></details> | <details><summary>🔍 View 10s</summary><br><img src="charts/Dashboard_2010s.png" width="100%"></details> | <details><summary>🔍 View 20s</summary><br><img src="charts/Dashboard_2020s.png" width="100%"></details> |
+<details>
+  <summary>🔍 <strong>View 1970s</strong></summary><br>
+  <img src="charts/Dashboard_1970s.png" width="100%">
+</details>
+
+<details>
+  <summary>🔍 <strong>View 1980s</strong></summary><br>
+  <img src="charts/Dashboard_1980s.png" width="100%">
+</details>
+
+<details>
+  <summary>🔍 <strong>View 1990s</strong></summary><br>
+  <img src="charts/Dashboard_1990s.png" width="100%">
+</details>
+
+<details>
+  <summary>🔍 <strong>View 2000s</strong></summary><br>
+  <img src="charts/Dashboard_2000s.png" width="100%">
+</details>
+
+<details>
+  <summary>🔍 <strong>View 2010s</strong></summary><br>
+  <img src="charts/Dashboard_2010s.png" width="100%">
+</details>
+
+<details>
+  <summary>🔍 <strong>View 2020s</strong></summary><br>
+  <img src="charts/Dashboard_2020s.png" width="100%">
+</details>
 
 ---
 
@@ -58,8 +85,12 @@ This project uses a multi-source data pipeline, integrating core historical char
    * **Source:** [utdata/rwd-billboard-data](https://github.com/utdata/rwd-billboard-data)
    * Contains weekly performance from 1960 to present.
 
-2. **MusicBrainz API (Core Metadata)**
+2. **Billboard Emerging Artists History**
+   * **Source:** Custom Python web scraper using the `billboard.py` library.
+   * Contains the complete weekly history of the Billboard Emerging Artists chart from its inception in August 2017 to present.
+
+3. **MusicBrainz API (Core Metadata)**
    * Fetches demographics, band relations (solo vs group), and community-voted genre tags.
 
-3. **TheAudioDB API (Supplemental Enrichment)**
+4. **TheAudioDB API (Supplemental Enrichment)**
    * Fallback for missing genre metadata and qualitative "Mood" attributes.
