@@ -25,7 +25,7 @@ Time is mapped around the vinyl's circumference, while the vinyl grooves serve a
 
 ---
 
-### Tempo: The Universal Pulse
+### Tempo
 
 A continuous, kinetic metronome animation tracking the tempo (BPM) of Billboard Hot 100 hits over decades. 
 The main needle tracks the **median BPM** of the era, while the dashed lines represent the 5th and 95th percentiles to show the full range of hit speeds. The density curve at the base illustrates the volume and distribution of songs at different tempos.
