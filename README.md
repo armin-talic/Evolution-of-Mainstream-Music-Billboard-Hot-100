@@ -3,10 +3,11 @@ Tracking the evolution of mainstream music through data visualization (1960-2025
 The data is collected by scraping Billboard Hot 100 history and enriched with MusicBrainz and TheAudioDB APIs. 
 
 ## Table of Contents
-* [Data Visualization](#-data-visualization)
+* [Data Visualization](#data-visualization)
     * [The Vinyl Dashboard: Longest-Running Hits](#-the-vinyl-dashboard-longest-running-hits)
-    * [The Rise of One-week Wonders](#-the-rise-of-one-week-wonders)
-    * [Billboard Hot 100 Timeline Infographic](#-billboard-hot-100-timeline-infographic)
+    * [Tempo: The Universal Pulse](#tempo-the-universal-pulse)
+    * [The Rise of One-week Wonders](#the-rise-of-one-week-wonders)
+    * [Billboard Hot 100 Timeline Infographic](#billboard-hot-100-timeline-infographic)
 * [Data Collection & Sources](#️-data-collection--sources)
 
 ---
@@ -20,6 +21,17 @@ Time is mapped around the vinyl's circumference, while the vinyl grooves serve a
 
 <p align="center">
   <img src="charts/Record_Chart.png" width="100%" alt="Billboard Vinyl Dashboard">
+</p>
+
+---
+
+### Tempo: The Universal Pulse
+
+A continuous, kinetic metronome animation tracking the tempo (BPM) of Billboard Hot 100 hits over decades. 
+The main needle tracks the **median BPM** of the era, while the dashed lines represent the 5th and 95th percentiles to show the full range of hit speeds. The density curve at the base illustrates the volume and distribution of songs at different tempos.
+
+<p align="center">
+  <video src="charts/metronome_continuous.mp4" autoplay loop muted playsinline width="100%"></video>
 </p>
 
 ---
