@@ -5,7 +5,7 @@ The data is collected by scraping Billboard Hot 100 history and enriched with Mu
 ## Table of Contents
 * [Data Visualization](#data-visualization)
     * [The Vinyl Dashboard: Longest-Running Hits](#-the-vinyl-dashboard-longest-running-hits)
-    * [Tempo: The Universal Pulse](#tempo-the-universal-pulse)
+    * [Tempo](#tempo)
     * [The Rise of One-week Wonders](#the-rise-of-one-week-wonders)
     * [Billboard Hot 100 Timeline Infographic](#billboard-hot-100-timeline-infographic)
 * [Data Collection & Sources](#️-data-collection--sources)
