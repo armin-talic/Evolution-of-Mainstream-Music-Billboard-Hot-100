@@ -59,11 +59,11 @@ The following visualizations break down 65 years of musical data into specific e
 * **Genre Longevity:** A ridgeplot showing the distribution of "staying power" per genre.
 * **Tempo Analysis:** A dynamic metronome showing the Average BPM (Beats Per Minute) for the era.
 
-### 1990s 
+### 1980s 
 
 <p align="center">
 
-  <img src="charts/Dashboard_1990s.png" width="100%" alt="Billboard 1990s Dashboard">
+  <img src="charts/Dashboard_1980s.png" width="100%" alt="Billboard 1980s Dashboard">
 
 </p>
 
