@@ -1,6 +1,7 @@
 # Evolution-of-Mainstream-Music-Billboard-Hot-100
 Tracking the evolution of mainstream music through data visualization (1960-2025). 
 The data is collected by scraping Billboard Hot 100 history and enriched with MusicBrainz and TheAudioDB APIs. 
+Data Collection is done with R and Python and all visualization is created in R (ggplot2).
 
 ## Table of Contents
 * [Data Visualization](#data-visualization)
