@@ -1,5 +1,5 @@
 # ==============================================================================
-# DECADES VIZ 
+# DECADES VIZ DASHBOARDS
 # ==============================================================================
 library(tidyverse)
 library(patchwork)
@@ -15,12 +15,12 @@ library(ggrepel)
 # 1. SETUP
 # ------------------------------------------------------------------------------
 options(ragg.max_dim = 200000)
+output_dir <- "output/"
+if(!dir.exists(output_dir)) dir.create(output_dir, recursive=TRUE)
+
 font_add_google("Shrikhand", "beatles_font")
 font_add_google("Montserrat", "clean_font") 
 showtext_auto()
-
-# output_dir <- 
-if(!dir.exists(output_dir)) dir.create(output_dir, recursive=TRUE)
 
 master_df <- read_csv("master_cleaned.csv", show_col_types = FALSE) %>% 
   mutate(year = as.numeric(year)) %>% 
@@ -45,63 +45,78 @@ genre_colors <- c(
   "Reggae/Ska"="#1abc9c", "Latin"="#c0392b", "Other"="#34495e", "Unknown"="#95a5a6"
 )
 
-# 3. Dynamic labels
+# 3. METRONOME
 # ------------------------------------------------------------------------------
 create_metronome_grob <- function(data_subset, accent_color, current_bg) {
+  
   stats <- data_subset %>%
     summarize(
-      avg_tempo = mean(audio_tempo, na.rm=TRUE),
-      min_tempo = quantile(audio_tempo, 0.05, na.rm=TRUE),
-      max_tempo = quantile(audio_tempo, 0.95, na.rm=TRUE)
+      avg_bpm = mean(audio_tempo, na.rm=TRUE),
+      min_bpm = quantile(audio_tempo, 0.05, na.rm=TRUE),
+      max_bpm = quantile(audio_tempo, 0.95, na.rm=TRUE),
+      count = n()
     )
   
-  min_scale <- 0; max_scale <- 220
-  bpm_to_coord <- function(bpm) {
-    norm <- (pmax(min_scale, pmin(max_scale, bpm)) - min_scale) / (max_scale - min_scale)
-    angle <- pi * (1 - norm)
-    list(x = cos(angle), y = sin(angle))
+  min_scale <- 40; max_scale <- 208
+  
+  bpm_to_coord <- function(bpm, radius = 1) {
+    val <- pmax(min_scale, pmin(max_scale, bpm))
+    norm <- (val - min_scale) / (max_scale - min_scale)
+    angle <- (3/4 * pi) - (norm * (pi / 2)) 
+    list(x = radius * cos(angle), y = radius * sin(angle))
   }
   
-  dens <- density(data_subset$audio_tempo, from=min_scale, to=max_scale, n=200, na.rm=TRUE)
-  heatmap_data <- tibble(bpm = dens$x, density = dens$y) %>%
-    mutate(alpha_val = density / max(density), 
-           start_angle = pi * (1 - (bpm - min_scale)/(max_scale - min_scale)),
-           end_angle = lag(start_angle, default = pi)) %>%
-    filter(bpm <= max_scale & bpm >= min_scale)
+  needle_tip <- bpm_to_coord(stats$avg_bpm, radius = 0.85)
+  weight_pos <- bpm_to_coord(stats$avg_bpm, radius = 0.65)
   
-  poly_list <- list()
-  for(i in 1:nrow(heatmap_data)) {
-    row <- heatmap_data[i,]; x1 <- cos(row$start_angle); y1 <- sin(row$start_angle)
-    x2 <- cos(row$end_angle); y2 <- sin(row$end_angle)
-    poly_list[[i]] <- tibble(group = i, x = c(0, x1, x2), y = c(0, y1, y2), intensity = row$alpha_val)
-  }
-  heat_poly <- bind_rows(poly_list)
+  body_shape <- tibble(
+    x = c(-0.6, 0.6, 0.15, -0.15), 
+    y = c(0, 0, 1.2, 1.2)
+  )
   
-  avg_pos <- bpm_to_coord(stats$avg_tempo); min_pos <- bpm_to_coord(stats$min_tempo); max_pos <- bpm_to_coord(stats$max_tempo)
+  ticks <- tibble(bpm = seq(40, 208, by = 20)) %>%
+    rowwise() %>%
+    mutate(
+      start = list(bpm_to_coord(bpm, 0.90)),
+      end   = list(bpm_to_coord(bpm, 0.95))
+    ) %>%
+    unnest_wider(start, names_sep = "_") %>%
+    unnest_wider(end, names_sep = "_")
+  
+  wood_color <- accent_color 
+  face_color <- "#FAFAFA"    
+  metal_color <- "#555555"
   
   ggplot() +
-    geom_polygon(data = heat_poly, aes(x=x, y=y, group=group, fill=intensity), color=NA) +
-    scale_fill_gradient(low = current_bg, high = accent_color) + 
-    annotate("path", x = seq(-1, 1, length.out=100), y = sqrt(1 - seq(-1, 1, length.out=100)^2), color = "#333333", linewidth = 1.5) +
-    annotate("segment", x=-1, y=0, xend=1, yend=0, color="#333333", linewidth=1.5) +
-    annotate("text", x = -1.15, y = 0, label = "0", family="clean_font", size=5, color="#555555") +
-    annotate("text", x = 1.15, y = 0, label = "220", family="clean_font", size=5, color="#555555") +
-    # Dynamic Average Label following the Red Line
-    annotate("text", x = avg_pos$x, y = 1.15, label = paste0(round(stats$avg_tempo), " BPM"), 
-             family="clean_font", size=6, fontface="bold", color="#e74c3c") +
-    annotate("segment", x=0, y=0, xend=min_pos$x*0.9, yend=min_pos$y*0.9, color="#555555", linetype="dashed", linewidth=1) +
-    annotate("text", x=min_pos$x*1.1, y=min_pos$y*1.1 + 0.1, label=paste0(round(stats$min_tempo)), family="clean_font", size=3.5, color="#555555") +
-    annotate("segment", x=0, y=0, xend=max_pos$x*0.9, yend=max_pos$y*0.9, color="#555555", linetype="dashed", linewidth=1) +
-    annotate("text", x=max_pos$x*1.1, y=max_pos$y*1.1 + 0.1, label=paste0(round(stats$max_tempo)), family="clean_font", size=3.5, color="#555555") +
-    annotate("segment", x=0, y=0, xend=avg_pos$x*0.95, yend=avg_pos$y*0.95, color="#e74c3c", linewidth=2) +
-    annotate("point", x=0, y=0, size=5, color="#333333") +
-    coord_fixed(clip = "off", xlim=c(-1.5, 1.5), ylim=c(0, 1.5)) +
-    theme_void() + labs(title="TEMPO ANALYSIS") +
-    theme(plot.title = element_text(family="beatles_font", size=24, hjust=0.5),
-          plot.background = element_rect(fill = current_bg, color = NA), 
-          panel.background = element_rect(fill = current_bg, color = NA),
-          legend.position = "none",
-          plot.margin = margin(20, 20, 20, 20))
+    geom_polygon(data = body_shape, aes(x=x, y=y), fill = wood_color, color = "#333333", linewidth = 1) +
+    annotate("polygon", x = c(-0.4, 0.4, 0.1, -0.1), y = c(0.1, 0.1, 1.1, 1.1), fill = face_color, alpha = 0.95) +
+    geom_segment(data = ticks, aes(x = start_x, y = start_y, xend = end_x, yend = end_y), color = "#333333", linewidth = 0.5) +
+    annotate("path", x = 0.9 * cos(seq(pi/4, 3*pi/4, length=100)), 
+             y = 0.9 * sin(seq(pi/4, 3*pi/4, length=100)), color = "#333333", alpha=0.3) +
+    annotate("segment", x = 0, y = 0.1, xend = needle_tip$x, yend = needle_tip$y, 
+             color = metal_color, linewidth = 2, lineend = "round") +
+    annotate("point", x = weight_pos$x, y = weight_pos$y, size = 5, color = "#AA8800") +
+    annotate("point", x = weight_pos$x, y = weight_pos$y, size = 2, color = "#FFFF00", alpha = 0.5) +
+    annotate("point", x = 0, y = 0.1, size = 3, color = "#333333") +
+    
+    annotate("text", x = 0, y = 0.35, label = paste0(round(stats$avg_bpm), " BPM"), 
+             family = "beatles_font", size = 7, color = "#333333") +
+    annotate("text", x = 0, y = 0.25, label = paste0("Avg of ", stats$count, " Songs"), 
+             family = "clean_font", size = 3, color = "#666666", fontface = "italic") +
+    annotate("text", x = -0.5, y = 0.8, label = paste0("Min\n", round(stats$min_bpm)), 
+             family = "clean_font", size = 3, color = "#555555", hjust = 1) +
+    annotate("text", x = 0.5, y = 0.8, label = paste0("Max\n", round(stats$max_bpm)), 
+             family = "clean_font", size = 3, color = "#555555", hjust = 0) +
+    labs(title="TEMPO", subtitle="Avg BPM (Tempo)") +
+    coord_fixed(xlim = c(-0.8, 0.8), ylim = c(0, 1.3), clip = "off") +
+    theme_void() +
+    theme(
+      plot.title = element_text(family = "beatles_font", size = 24, hjust = 0.5, color = "#333333"),
+      plot.subtitle = element_text(family = "clean_font", size = 14, hjust = 0.5, color = "#555555"),
+      plot.background = element_rect(fill = current_bg, color = NA),
+      panel.background = element_rect(fill = current_bg, color = NA),
+      plot.margin = margin(10, 10, 10, 10)
+    )
 }
 
 # 4. DASHBOARD GENERATOR
@@ -112,9 +127,8 @@ create_dashboard <- function(title_text, data_subset, style_list, is_master = FA
   accent_color <- style_list$accent
   
   min_yr <- min(data_subset$year); max_yr <- max(data_subset$year)
-  x_breaks <- if(is_master) seq(1960, 2020, by=10) else seq(min_yr, max_yr, by=5)
-  p95 <- quantile(data_subset$weeks_on_chart, 0.95, na.rm=TRUE)
-  longevity_max <- case_when(p95 <= 20 ~ 20, p95 <= 30 ~ 30, p95 <= 40 ~ 40, p95 <= 50 ~ 50, TRUE ~ 60)
+  # Update X-axis breaks to show every year for non-master charts
+  x_breaks <- if(is_master) seq(1960, 2020, by=10) else seq(min_yr, max_yr, by=1)
   
   theme_custom <- theme_minimal() + theme(
     plot.background = element_rect(fill = current_bg, color = NA),
@@ -133,12 +147,16 @@ create_dashboard <- function(title_text, data_subset, style_list, is_master = FA
     annotate("text", x=0.5, y=0.5, label=title_text, size=30, family="beatles_font", color=accent_color) + 
     theme_void() + theme(plot.background = element_rect(fill = current_bg, color = NA))
   
-  # B. TOP ARTIST (STRICT TOP 1 FOR BOTH MASTER & DECADES)
+  # B. TOP ARTIST (Text always on top with dynamic Y limits)
   leaders <- data_subset %>% group_by(year, performer) %>% summarize(wks = sum(weeks_on_chart, na.rm=T), .groups="drop") %>% group_by(year) %>% slice_max(wks, n=1, with_ties=F)
   artist_genres <- data_subset %>% group_by(year, performer) %>% slice_max(weeks_on_chart, n=1, with_ties=FALSE) %>% select(year, performer, parent_genre)
-  leaders <- leaders %>% left_join(artist_genres, by=c("year", "performer"))
   
-  # Strictly only show the Top 1 artist by total weeks in the subset
+  leaders <- leaders %>% left_join(artist_genres, by=c("year", "performer")) %>% arrange(year)
+  
+  # Dynamic Y-Axis Calculation for Top Artist
+  y_max_art <- max(leaders$wks, na.rm=TRUE)
+  y_lim_art <- ifelse(y_max_art > 50, ceiling(y_max_art / 100) * 100 + 100, ceiling(y_max_art / 10) * 10 + 10)
+  
   top_1_perf <- leaders %>% group_by(performer) %>% summarize(total_wks = sum(wks)) %>% slice_max(total_wks, n=1, with_ties=FALSE) %>% pull(performer)
   
   if(is_master) {
@@ -148,118 +166,130 @@ create_dashboard <- function(title_text, data_subset, style_list, is_master = FA
     p_artist <- ggplot(leaders, aes(x=year, y=wks, fill=fill_col)) + 
       geom_col(color="black", linewidth=0.2) + 
       scale_fill_manual(values = c(genre_colors, "Default" = "#CCCCCC")) + 
-      scale_x_continuous(breaks=x_breaks) + scale_y_continuous(expand=expansion(mult=c(0, 0.3))) + 
-      theme_custom + labs(title="TOP ARTIST BY YEAR", subtitle=paste0("Leader: ", legend_artist_html), x="", y="Weeks")
+      scale_x_continuous(breaks=x_breaks) + scale_y_continuous(limits = c(0, y_lim_art), expand = c(0, 0)) + 
+      theme_custom + labs(title="TOP ARTISTS", subtitle=paste0("Leader: ", legend_artist_html), x="", y="Weeks")
   } else {
-    leaders <- leaders %>% mutate(label_txt = if_else(performer == top_1_perf, str_wrap(performer, 10), NA_character_))
     p_artist <- ggplot(leaders, aes(x=year, y=wks)) + 
       geom_col(fill=accent_color, color="black", linewidth=0.5) +
-      geom_text_repel(aes(label=label_txt), nudge_y=10, direction="y", size=3, fontface="bold", family="clean_font", max.overlaps=Inf) +
-      scale_x_continuous(breaks=x_breaks) + scale_y_continuous(expand=expansion(mult=c(0, 0.6))) + 
-      theme_custom + labs(title="TOP ARTIST BY YEAR", subtitle="Top 1 Labeled", x="", y="Weeks")
+      geom_richtext(aes(
+        y = wks + y_max_art * 0.02, # Placed just above the bar
+        label = str_replace_all(str_wrap(performer, width = 15), "\n", "<br>")
+      ), 
+      hjust = 0, color = "black", angle=90, vjust=0.5, halign=0.5, size=4, lineheight=0.8, fontface="bold", family="clean_font",
+      fill = NA, label.color = NA) +
+      scale_x_continuous(breaks=x_breaks) + 
+      scale_y_continuous(limits = c(0, y_lim_art), expand = c(0, 0)) + 
+      theme_custom + 
+      labs(title="TOP ARTISTS", subtitle="The artist with the most total weeks on the Hot 100.", x="", y="Weeks")
   }
   
-  # C. MOST POPULAR SONGS 
-  top_songs <- data_subset %>% filter(peak_pos == 1) %>% group_by(year, title, performer, parent_genre) %>% summarize(wks = max(weeks_on_chart), .groups="drop") %>% group_by(year) %>% slice_max(wks, n=1, with_ties=FALSE)
-  
-  # Strictly only one label for the all-time peak hit
-  top_single_labeled <- top_songs %>% slice_max(wks, n=1, with_ties=FALSE) 
-  
-  # C. MOST POPULAR SONG (STRICT 10 BARS + 1 LABEL)
-  # ------------------------------------------------------------------------------
+  # C. MOST POPULAR SONGS (Text always on top with dynamic Y limits & 1-row legend)
   top_songs_all <- data_subset %>% 
     filter(peak_pos == 1) %>% 
-    group_by(year, title, performer, parent_genre) %>% 
-    summarize(wks = max(weeks_on_chart), .groups="drop") %>% 
-    slice_max(wks, n=10, with_ties=FALSE) # Limit to Top 10 Bars total
-  
-  # Strictly only one label for the single all-time peak hit in this set
-  top_single_labeled <- top_songs_all %>% 
-    slice_max(wks, n=1, with_ties=FALSE) 
-  
-  
-  
-  
-  # C. MOST POPULAR SONG (ONE BAR PER YEAR + ONE TEXT LABEL)
-  # ------------------------------------------------------------------------------
-  top_songs_all <- data_subset %>% 
-    filter(peak_pos == 1) %>% 
-    mutate(title_clean = str_remove_all(title, "\\s*\\(.*?\\)")) %>% # Remove brackets
+    mutate(title_clean = str_remove_all(title, "\\s*\\(.*?\\)")) %>% 
     group_by(year) %>% 
-    # Pick the #1 song that stayed longest for EACH year
     slice_max(weeks_on_chart, n = 1, with_ties = FALSE) %>% 
     ungroup() %>%
+    arrange(year) %>%
     select(year, title_clean, performer, parent_genre, wks = weeks_on_chart)
   
-  # Strictly only one label for the single all-time peak hit in this dashboard
-  top_single_labeled <- top_songs_all %>% 
-    slice_max(wks, n = 1, with_ties = FALSE) 
+  # Dynamic Y-Axis Calculation for Top Songs
+  y_max_song <- max(top_songs_all$wks, na.rm=TRUE)
+  y_lim_song <- ifelse(y_max_song > 50, ceiling(y_max_song / 100) * 100 + 200, ceiling(y_max_song / 10) * 10 + 30)
   
-  p_popular <- ggplot(top_songs_all, aes(x = year, y = wks, fill = parent_genre)) +
-    geom_col(color = "black", alpha = 0.9, width = 0.8) + 
-    scale_fill_manual(values = genre_colors, drop = TRUE) +
-    # Tilted label for the overall leader of the sheet
-    geom_text(data = top_single_labeled, 
-              aes(label = paste0(performer, "\n—\n", title_clean)),
-              vjust = -0.5, angle = 15, size = 4.5, fontface = "bold", 
-              family = "clean_font", lineheight = 0.9) +
-    # X-axis: Every second year for readability
-    scale_x_continuous(breaks = seq(min_yr, max_yr, by = 5)) +
-    scale_y_continuous(expand = expansion(mult = c(0, 0.8))) + 
-    theme_custom +
-    labs(title = "MOST POPULAR SONG PER YEAR", 
-         subtitle = "The longest-running #1 hit for every year", 
-         x = "", y = "Weeks")
+  if(is_master) {
+    top_single_labeled <- top_songs_all %>% slice_max(wks, n=1, with_ties=FALSE) 
+    p_popular <- ggplot(top_songs_all, aes(x = year, y = wks, fill = parent_genre)) +
+      geom_col(color = "black", alpha = 0.9, width = 0.8) + 
+      scale_fill_manual(values = genre_colors, drop = TRUE) +
+      geom_text(data = top_single_labeled, 
+                aes(label = paste0(performer, "\n—\n", str_wrap(title_clean, width = 20))),
+                vjust = -0.5, angle = 15, size = 4.5, fontface = "bold", 
+                family = "clean_font", lineheight = 0.9) +
+      scale_x_continuous(breaks = x_breaks) +
+      scale_y_continuous(limits = c(0, y_lim_song), expand = c(0, 0)) + 
+      theme_custom +
+      theme(
+        legend.position = "bottom",          
+        legend.title = element_blank(),      
+        legend.text = element_text(size=12, family="clean_font"),
+        legend.margin = margin(t=-10)
+      ) +
+      guides(fill = guide_legend(nrow = 1)) + # Forced 1 row
+      labs(title = "BEST RANKING SONGS", subtitle = "The single defining song of each year that held the #1 spot the longest.", x = "", y = "Weeks")
+  } else {
+    p_popular <- ggplot(top_songs_all, aes(x = year, y = wks, fill = parent_genre)) +
+      geom_col(color = "black", alpha = 0.9, width = 0.8) + 
+      scale_fill_manual(values = genre_colors, drop = TRUE) +
+      geom_richtext(aes(
+        y = wks + y_max_song * 0.02, # Placed just above the bar
+        label = str_replace_all(str_wrap(paste(title_clean, "-", performer), width = 25), "\n", "<br>")
+      ), 
+      hjust = 0, color = "black", angle=90, vjust=0.5, halign=0.5, size=3.5, lineheight=0.8, fontface="bold", family="clean_font",
+      fill = NA, label.color = NA) +
+      scale_x_continuous(breaks = x_breaks) +
+      scale_y_continuous(limits = c(0, y_lim_song), expand = c(0, 0)) + 
+      theme_custom +
+      theme(
+        legend.position = "bottom",          
+        legend.title = element_blank(),      
+        legend.text = element_text(size=12, family="clean_font"),
+        legend.margin = margin(t=-10)
+      ) +
+      guides(fill = guide_legend(nrow = 1)) + # Forced 1 row
+      labs(title = "BEST RANKING SONGS", subtitle = "The single defining song of each year that held the #1 spot the longest.", x = "", y = "Weeks")
+  }
   
-  # D. VELOCITY (BLACK LINE REMOVED)
-  # ------------------------------------------------------------------------------
+  # D. VELOCITY 
   top_outlier <- data_subset %>% slice_max(weeks_on_chart, n=1, with_ties=FALSE)
-  
   p_vel <- ggplot(data_subset, aes(x=peak_pos, y=weeks_on_chart)) + 
     geom_bin2d(bins=30, color="black", linewidth=0.1) + 
     scale_fill_gradient(low="#ccff00", high="#4b0082") + scale_x_reverse(limits=c(100, 1)) +
-    geom_text_repel(
-      data = top_outlier, 
-      aes(label = paste0(performer, " - ", title, "\n(", weeks_on_chart, " wks)")), 
-      nudge_x = -25, 
-      nudge_y = 5, 
-      color = "black", 
-      family = "clean_font", 
-      size = 3.5, 
-      fontface = "bold",
-      segment.color = NA  # This removes the connecting line
-    ) +
+    geom_text_repel(data = top_outlier, aes(label = paste0(performer, " - ", title, "\n(", weeks_on_chart, " wks)")), 
+                    nudge_x = -25, nudge_y = 5, color = "black", family = "clean_font", size = 3.5, fontface = "bold", segment.color = NA) +
     theme_custom + 
-    labs(title="CHART VELOCITY", subtitle="Radiant density", x="Peak Rank", y="Weeks")
+    labs(title="Songs Trajectory", subtitle="Mapping Song Rank vs. Time on the Chart. Darker spots = most songs drop from the list quickly.", x="Peak Rank", y="Weeks")
   
-  # E. WAVE
+  # E. WAVE 
   top_4_wave <- data_subset %>% filter(parent_genre != "Other") %>% group_by(parent_genre) %>% summarize(n = n_distinct(paste(title, performer))) %>% slice_max(n, n=4) %>% pull(parent_genre)
   wave_data <- data_subset %>% filter(parent_genre %in% top_4_wave) %>% group_by(year, parent_genre) %>% summarize(n = n_distinct(paste(title, performer)), .groups="drop")
-  legend_wave_html <- paste(map_chr(top_4_wave, ~glue("<span style='color:{genre_colors[.x]};'>● {.x}</span>")), collapse="   ")
   
   p_wave <- ggplot(wave_data, aes(x=year, y=n, fill=parent_genre)) +
-    geom_stream(type="mirror", bw=0.6, color="black", linewidth=0.3) + scale_fill_manual(values=genre_colors) +
-    scale_x_continuous(breaks=x_breaks) + theme_custom + theme(axis.text.y=element_blank()) +
-    labs(title="GENRES WAVE", subtitle=legend_wave_html, x="", y="")
+    geom_stream(type="mirror", bw=0.6, color="black", linewidth=0.3) + 
+    scale_fill_manual(values=genre_colors, name="Genre") +
+    scale_x_continuous(breaks=x_breaks) + 
+    theme_custom + 
+    theme(
+      axis.text.y=element_blank(),
+      legend.position = "bottom",          
+      legend.title = element_blank(),      
+      legend.text = element_text(size=12, family="clean_font"),
+      legend.margin = margin(t=-10)
+    ) +
+    labs(title="THE VIBE SHIFT", subtitle="Tracking the rise and fall of genres. Thicker streams = more market dominance.", x="", y="")
   
-  # F. LONGEVITY
+  # F. DISTRIBUTION OF PEAK POSITIONS
+  # ----------------------------------------------------------------------------
   top5_long <- data_subset %>% filter(parent_genre != "Other") %>% group_by(parent_genre) %>% summarize(n = n_distinct(paste(title, performer))) %>% slice_max(n, n=5) %>% pull(parent_genre)
-  stats_long <- data_subset %>% filter(parent_genre %in% top5_long) %>% group_by(parent_genre) %>% summarize(med = median(weeks_on_chart, na.rm=T)) %>% arrange(desc(med))
+  stats_long <- data_subset %>% filter(parent_genre %in% top5_long) %>% group_by(parent_genre) %>% summarize(med = median(peak_pos, na.rm=T)) %>% arrange(med)
   
-  p_ridge <- ggplot(data_subset %>% filter(parent_genre %in% top5_long), aes(x=weeks_on_chart, y=fct_reorder(parent_genre, weeks_on_chart, .fun=median), fill=parent_genre)) +
-    geom_density_ridges(alpha=0.9, color="black", scale=1.3) + scale_fill_manual(values=genre_colors) + scale_x_continuous(limits = c(0, longevity_max + 10)) +
-    annotate("text", x = longevity_max, y = 5.2, label = glue("Leader: {stats_long$parent_genre[1]} ({stats_long$med[1]} wks)"), 
+  p_ridge <- ggplot(data_subset %>% filter(parent_genre %in% top5_long), aes(x=peak_pos, y=fct_reorder(parent_genre, peak_pos, .fun=median, .desc=TRUE), fill=parent_genre)) +
+    geom_density_ridges(alpha=0.9, color="black", scale=1.3) + 
+    scale_fill_manual(values=genre_colors) + 
+    scale_x_continuous(limits = c(100, 1), breaks = c(100, 75, 50, 25, 1)) +
+    annotate("text", x = 100, y = 5.2, label = glue("Best Median: {stats_long$parent_genre[1]} (Rank {stats_long$med[1]})"), 
              family="clean_font", fontface="bold", size=4, hjust=1) +
-    theme_custom + labs(title="LONGEVITY", subtitle="Median weeks by genre", x="Weeks", y="")
+    theme_custom + 
+    labs(title="CHARTING SUCCESS", subtitle="Where do genres typically peak? Peaks further right mean higher average chart ranks.", x="Peak Rank", y="")
   
-  # G. METRONOME
+  # G. METRONOME (REALISTIC)
   p_metronome <- create_metronome_grob(data_subset, accent_color, current_bg)
   
   layout <- "11\n23\n45\n67"
   (p_title + p_artist + p_popular + p_vel + p_wave + p_ridge + p_metronome) + plot_layout(design=layout, heights=c(0.35, 1, 1, 1.3))
 }
 
-# 5. EXECUTION
+# 6. EXECUTION LOOP
 # ------------------------------------------------------------------------------
 decades <- c("1960s", "1970s", "1980s", "1990s", "2000s", "2010s", "2020s")
 
@@ -269,8 +299,11 @@ for(d in decades) {
   fname <- paste0(output_dir, "Dashboard_", d, ".png")
   agg_png(fname, width=15, height=15, units="in", res=150, scaling=1.5)
   print(p); dev.off()
+  message(paste("Saved:", fname))
 }
 
+# Master (All-time)
 p_master <- create_dashboard("Billboard Hot 100: 1960 - 2025", master_df, decade_styles[["1960-2025"]], is_master=TRUE)
 agg_png(paste0(output_dir, "Dashboard_All_Time.png"), width=20, height=24, units="in", res=150, scaling=2.0) 
 print(p_master); dev.off()
+message("Saved: Dashboard_All_Time.png")
