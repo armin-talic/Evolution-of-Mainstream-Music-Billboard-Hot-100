@@ -30,7 +30,7 @@ Time is mapped around the vinyl's circumference, while the vinyl grooves serve a
 
 Tempo distribution of songs on every The Beatles' album 
 
-https://github.com/user-attachments/assets/ad327a03-c3e0-449f-99bb-b13cdf164ab1
+<video src="https://github.com/armin-talic/Evolution-of-Mainstream-Music-Billboard-Hot-100/blob/main/charts/metronome_beatles.mp4" autoplay loop muted playsinline width="100%"></video>
 
 
 
