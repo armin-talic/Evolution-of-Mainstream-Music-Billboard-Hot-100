@@ -28,7 +28,7 @@ Time is mapped around the vinyl's circumference, while the vinyl grooves serve a
 
 ### Tempo
 
-Tempo distribution of songs on every The Beatles' album 
+Tempo distribution of songs on every album of The Beatles. 
 
 
 
