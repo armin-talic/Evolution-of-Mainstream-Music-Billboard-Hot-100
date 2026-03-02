@@ -5,7 +5,7 @@ Data Collection is done with R and Python and all visualization is created in R 
 
 ## Table of Contents
 * [Data Visualization](#data-visualization)
-    * [The Vinyl Dashboard: Longest-Running Hits](#-the-vinyl-dashboard-longest-running-hits)
+    * [Longest-Running Hits](#-the-vinyl-dashboard-longest-running-hits)
     * [Tempo](#tempo)
     * [The Rise of One-week Wonders](#the-rise-of-one-week-wonders)
     * [Billboard Hot 100 Timeline Infographic](#billboard-hot-100-timeline-infographic)
@@ -15,7 +15,7 @@ Data Collection is done with R and Python and all visualization is created in R 
 
 ## Data Visualization
 
-### The Vinyl Chart: Longest-Running Hits
+### Longest-Running Hits
 
 A vinyl-styled visualization showing the artists with the highest "longevity" on Billboard Top 100; longevity is defined by total amount of weeks accumulated while the track is on the list. 
 Time is mapped around the vinyl's circumference, while the vinyl grooves serve as a scale for longevity; the further a bar extends outward, the longer that song stayed on the Hot 100.
