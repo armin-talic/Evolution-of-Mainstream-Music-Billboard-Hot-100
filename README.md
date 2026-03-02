@@ -30,6 +30,9 @@ Time is mapped around the vinyl's circumference, while the vinyl grooves serve a
 
 Tempo distribution of songs on every album of The Beatles. 
 
+> *"Everyone of them knew that as time went by <br>
+> They'd get a little bit older and a little bit slower"* <br>
+> — **Revolution 9**
 
 https://github.com/user-attachments/assets/65bbf868-bc8e-4696-88ed-b17936691aa3
 
