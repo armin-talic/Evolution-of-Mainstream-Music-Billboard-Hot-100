@@ -4,7 +4,7 @@ The data is collected by scraping Billboard Hot 100 history and enriched with Mu
 Data Collection is done with R and Python and all visualization is created in R (ggplot2).
 
 ## Table of Contents
-* [Tableau Dashboard](#tableau-dashboard)
+* [Tableau Dashboard]([#tableau-dashboard](https://public.tableau.com/app/profile/armin.talic/viz/EvolutionofMainstreamMusicBillboardHot100/EvolutionofMainstreamMusic))
 * [Data Visualization](#data-visualization)
     * [Longest-Running Hits](#-the-vinyl-dashboard-longest-running-hits)
     * [Tempo](#tempo)
