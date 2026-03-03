@@ -1,10 +1,10 @@
-# Evolution-of-Mainstream-Music-Billboard-Hot-100
+Evolution-of-Mainstream-Music-Billboard-Hot-100
 Tracking the evolution of mainstream music through data visualization (1960-2025). 
 The data is collected by scraping Billboard Hot 100 history and enriched with MusicBrainz and TheAudioDB APIs. 
 Data Collection is done with R and Python and all visualization is created in R (ggplot2).
 
 ## Table of Contents
-* [Tableau Dashboard]([#tableau-dashboard](https://public.tableau.com/app/profile/armin.talic/viz/EvolutionofMainstreamMusicBillboardHot100/EvolutionofMainstreamMusic))
+* [Tableau Dashboard](#tableau-dashboard)
 * [Data Visualization](#data-visualization)
     * [Longest-Running Hits](#-the-vinyl-dashboard-longest-running-hits)
     * [Tempo](#tempo)
@@ -16,8 +16,15 @@ Data Collection is done with R and Python and all visualization is created in R 
 
 ## Tableau Dashboard
 
-Explore the interactive version of this visualization on Tableau Public:  
-[**Evolution of Mainstream Music : Billboard Hot 100**](https://public.tableau.com/app/profile/armin.talic/viz/EvolutionofMainstreamMusicBillboardHot100/EvolutionofMainstreamMusic)
+Explore the interactive version of this visualization on Tableau Public. Hover over the genre waves to see the all-time top artists for each style, or use the timeline to filter the vinyl chart by decade.  
+
+[**Access the Interactive Tableau Dashboard Here**](https://public.tableau.com/app/profile/armin.talic/viz/EvolutionofMainstreamMusicBillboardHot100/EvolutionofMainstreamMusic)
+
+<p align="center">
+  <a href="https://public.tableau.com/app/profile/armin.talic/viz/EvolutionofMainstreamMusicBillboardHot100/EvolutionofMainstreamMusic">
+    <img src="charts/tableau_dashboard.png" width="100%" alt="Tableau Interactive Dashboard Preview">
+  </a>
+</p>
 
 ---
 
