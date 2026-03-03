@@ -20,11 +20,6 @@ Explore the interactive version of this visualization on Tableau Public. Hover o
 
 [**Access the Interactive Tableau Dashboard Here**](https://public.tableau.com/app/profile/armin.talic/viz/EvolutionofMainstreamMusicBillboardHot100/EvolutionofMainstreamMusic)
 
-<p align="center">
-  <a href="https://public.tableau.com/app/profile/armin.talic/viz/EvolutionofMainstreamMusicBillboardHot100/EvolutionofMainstreamMusic">
-    <img src="charts/tableau_dashboard.png" width="100%" alt="Tableau Interactive Dashboard Preview">
-  </a>
-</p>
 
 ---
 
